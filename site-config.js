@@ -1,8 +1,10 @@
 "use strict";
 
 // Replace placeholders with your project team details.
+// Place the logo at logoSrc; the header and footer load it automatically.
 // Leave contactEmail empty to use the local contact-draft mode.
 const SITE_CONFIG = {
+  "logoSrc": "assets/images/brand/logo.png",
   "contactEmail": "",
   "socials": [
     {

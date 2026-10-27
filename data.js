@@ -1,35 +1,39 @@
 "use strict";
 
 // Prototype content. Trend scores and reaction counts are illustrative.
-const PIXELVERSE_DATA = {
+const PIXORA_DATA = {
   "artworks": [
     {
-      "id": "loading-identity",
-      "title": "Loading Identity",
-      "creator": "Mira",
-      "description": "An unfinished avatar becomes a portrait of the selves we build, revise, and share online.",
+      "id": "galactic-gecko",
+      "title": "Galactic Gecko #5507",
+      "creator": "6yRp2M...vW3a",
+      "description": "In the farthest reaches of the universe, the hearts of the gecko warriors of old beat within every Barada racer. You can feel their blood course through your veins as the Emperor Prime gives the signal: let the spaceship race begin.",
       "category": "Digital Art",
-      "collection": "The Digital Noise Collection",
+      "collection": "Galactic Geckos",
       "year": "2026",
       "edition": "Prototype 01 / 12",
       "visual": "visual-identity",
       "featured": true,
       "trend": 94,
-      "reactions": 28
+      "reactions": 28,
+      "price": "$702.74",
+      "image": "assets/images/nfts/gecko.webp"
     },
     {
-      "id": "screenshot-feeling",
-      "title": "Screenshot of a Feeling",
-      "creator": "Nox",
-      "description": "A captured moment of affection and absurdity, layered like a memory saved to a desktop.",
+      "id": "slippy",
+      "title": "Slippy #69",
+      "creator": "gir9",
+      "description": "One snake. No arms. Many moods. Drawn by Antoine Mingo.",
       "category": "Illustrations",
-      "collection": "Soft Signals",
+      "collection": "SlippyNFT",
       "year": "2026",
       "edition": "Prototype 02 / 12",
       "visual": "visual-feeling",
       "featured": false,
       "trend": 72,
-      "reactions": 16
+      "reactions": 16,
+      "price": "$63.88",
+      "image": "assets/images/nfts/slippy.webp"
     },
     {
       "id": "main-character",
@@ -43,7 +47,8 @@ const PIXELVERSE_DATA = {
       "visual": "visual-main",
       "featured": true,
       "trend": 99,
-      "reactions": 42
+      "reactions": 42,
+      "image": ""
     },
     {
       "id": "offline-online",
@@ -57,7 +62,9 @@ const PIXELVERSE_DATA = {
       "visual": "visual-offline",
       "featured": false,
       "trend": 67,
-      "reactions": 13
+      "reactions": 13,
+      "price": null,
+      "image": ""
     },
     {
       "id": "404-self",
@@ -71,7 +78,8 @@ const PIXELVERSE_DATA = {
       "visual": "visual-404",
       "featured": true,
       "trend": 91,
-      "reactions": 35
+      "reactions": 35,
+      "image": ""
     },
     {
       "id": "infinite-refresh",
@@ -85,7 +93,9 @@ const PIXELVERSE_DATA = {
       "visual": "visual-loop",
       "featured": false,
       "trend": 88,
-      "reactions": 24
+      "reactions": 24,
+      "price": null,
+      "image": ""
     },
     {
       "id": "open-tabs",
@@ -99,7 +109,9 @@ const PIXELVERSE_DATA = {
       "visual": "visual-window",
       "featured": false,
       "trend": 76,
-      "reactions": 19
+      "reactions": 19,
+      "price": null,
+      "image": ""
     },
     {
       "id": "buffering-brain",
@@ -115,7 +127,8 @@ const PIXELVERSE_DATA = {
       "trend": 97,
       "reactions": 51,
       "caption": "ME TRYING TO REMEMBER",
-      "punchline": "THE THING I JUST STUDIED"
+      "punchline": "THE THING I JUST STUDIED",
+      "image": ""
     },
     {
       "id": "one-more-tab",
@@ -131,7 +144,8 @@ const PIXELVERSE_DATA = {
       "trend": 85,
       "reactions": 31,
       "caption": "I HAVE EVERYTHING",
-      "punchline": "UNDER CTRL + T"
+      "punchline": "UNDER CTRL + T",
+      "image": ""
     },
     {
       "id": "deadline-mode",
@@ -147,7 +161,8 @@ const PIXELVERSE_DATA = {
       "trend": 93,
       "reactions": 46,
       "caption": "THREE WEEKS TO CREATE",
-      "punchline": "STARTS AT 11:49 PM"
+      "punchline": "STARTS AT 11:49 PM",
+      "image": ""
     }
   ],
   "artists": [

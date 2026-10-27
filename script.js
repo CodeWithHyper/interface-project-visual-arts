@@ -1,8 +1,9 @@
 "use strict";
 
-const {artworks, artists} = PIXELVERSE_DATA;
+const {artworks, artists} = PIXORA_DATA;
 const page = document.body.dataset.page;
 const collectibleIds = new Set(artworks.filter(art => art.category !== "Memes").map(art => art.id));
+// Keep existing browser storage keys so the rebrand preserves saved choices.
 const storageKey = "pixelverse-state-v1";
 const draftKey = "pixelverse-contact-draft";
 const reactionTypes = [
@@ -56,21 +57,83 @@ function toggleId(list, id) {
   else list.splice(index, 1);
 }
 
+function artworkImagePath(art) {
+  if (typeof art.image !== "string" || !art.image.trim()) return "";
+  try {
+    const src = art.image.trim();
+    const url = new URL(src, "https://pixora.local/");
+    return ["http:", "https:"].includes(url.protocol) ? src : "";
+  } catch { return ""; }
+}
+
+function artworkImageMarkup(art, lazy = true) {
+  const src = artworkImagePath(art);
+  return src ? `<img class="card-image" src="${escapeHtml(src)}" alt="" loading="${lazy ? "lazy" : "eager"}" decoding="async" data-art-image data-fallback-visual="${escapeHtml(art.visual)}" data-art-title="${escapeHtml(art.title)}">` : "";
+}
+
+function artworkVisual(art, classes) {
+  const image = artworkImageMarkup(art);
+  return `<div class="art-visual ${classes} ${image ? "has-card-image" : escapeHtml(art.visual)}" role="img" aria-label="${escapeHtml(art.imageAlt || "Artwork: " + art.title)}">${image}</div>`;
+}
+
+// Keep an illustration visible if a replacement image cannot be loaded.
+document.addEventListener("error", event => {
+  const image = event.target;
+  if (!image.matches?.("[data-art-image]")) return;
+  const frame = image.parentElement;
+  frame.className = frame.className.replace("has-card-image", image.dataset.fallbackVisual);
+  frame.setAttribute("aria-label", "Placeholder illustration for " + image.dataset.artTitle);
+  image.remove();
+}, true);
+
 function artworkCard(art, options = {}) {
+  if (options.collectible) {
+    const reacted = state.reactions[art.id] === "love";
+    const hearts = reactionCount(art, reactionTypes.find(type => type.id === "love"));
+    const price = art.price == null || art.price === "" ? "Not priced" : art.price;
+    const reactionLabel = `${reacted ? "Remove love reaction from" : "Love"} ${art.title}`;
+    return `<article class="art-card nft-card">
+      <button type="button" class="card-open" data-art-id="${escapeHtml(art.id)}" aria-label="View details for ${escapeHtml(art.title)}">
+        ${artworkVisual(art, "card-visual")}
+        <div class="nft-card-body">
+          <p class="nft-card-collection">${escapeHtml(art.collection)}</p>
+          <h3>${escapeHtml(art.title)}</h3>
+          <p class="nft-card-author">By ${escapeHtml(art.creator)}</p>
+        </div>
+      </button>
+      <div class="nft-card-footer">
+        <span class="nft-card-price"><span class="sr-only">Price: </span>${escapeHtml(price)}</span>
+        <button class="nft-card-reaction" type="button" data-nft-reaction-id="${escapeHtml(art.id)}" aria-pressed="${reacted}" aria-label="${escapeHtml(reactionLabel)}, ${hearts} ${hearts === 1 ? "heart" : "hearts"}" title="${escapeHtml(reactionLabel)}"><span aria-hidden="true">${reacted ? "♥" : "♡"}</span><span data-nft-heart-count>${hearts}</span></button>
+      </div>
+    </article>`;
+  }
   const badge = options.trending ? `<span class="trend-badge">↗ Demo trend ${art.trend}</span>` : escapeHtml(art.category);
-  const collecting = options.collectible;
-  const collected = state.collection.includes(art.id);
   return `<article class="art-card">
     <button type="button" class="card-open" data-art-id="${escapeHtml(art.id)}" aria-label="View details for ${escapeHtml(art.title)}">
-      <div class="art-visual card-visual ${escapeHtml(art.visual)}" role="img" aria-label="Abstract digital illustration for ${escapeHtml(art.title)}"></div>
+      ${artworkVisual(art, "card-visual")}
       <div class="card-body"><div class="card-meta"><span>${badge}</span><span class="mono">${escapeHtml(art.edition)}</span></div>
         <h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)} · Sample creator</p>
         <p class="card-description">${escapeHtml(art.description)}</p><div class="card-bottom"><span>${escapeHtml(art.collection)}</span><span aria-hidden="true">↗</span></div>
       </div>
     </button>
-    ${collecting ? `<div class="card-actions"><button class="pill ${collected ? "secondary" : "solid"}" type="button" data-collect-id="${escapeHtml(art.id)}" aria-pressed="${collected}" aria-label="${collected ? "Remove" : "Collect"} ${escapeHtml(art.title)}${collected ? " from collection" : " in demo collection"}">${collected ? "Collected ✓ · Remove" : "Add to collection ◈"}</button><p class="card-note">Simulated edition · No minting or purchase</p></div>` : ""}
   </article>`;
 }
+
+// Render the logo from HTML immediately; show text only if the image fails.
+document.querySelectorAll("[data-brand]").forEach(brand => {
+  const logo = brand.querySelector("img");
+  const showTextFallback = () => { brand.textContent = "Pixora"; };
+  if (!SITE_CONFIG.logoSrc) {
+    showTextFallback();
+    return;
+  }
+  logo.addEventListener("error", showTextFallback);
+  if (logo.getAttribute("src") !== SITE_CONFIG.logoSrc) {
+    logo.setAttribute("src", SITE_CONFIG.logoSrc);
+  }
+  // A cached failure can occur before this deferred script runs.
+  if (logo.complete && logo.naturalWidth === 0) showTextFallback();
+});
 
 // Shared navigation, social profiles, and collection totals.
 const toggle = byId("menu-toggle");
@@ -177,7 +240,7 @@ function renderMemes(focusReaction) {
   const sorted = [...memes].sort((a, b) => sort === "title" ? a.title.localeCompare(b.title) : sort === "reactions" ? memeScore(b) - memeScore(a) : b.trend - a.trend);
   byId("meme-gallery").innerHTML = sorted.map(art => `<article class="art-card">
     <button class="card-open" type="button" data-art-id="${art.id}" aria-label="View ${escapeHtml(art.title)} details">
-      <div class="art-visual meme-visual ${art.visual}" role="img" aria-label="${escapeHtml(art.caption || art.title)}. ${escapeHtml(art.punchline || art.description)}"><span class="meme-caption">${escapeHtml(art.caption || art.title.toUpperCase())}</span><span class="meme-caption">${escapeHtml(art.punchline || (art.id === "404-self" ? "PLEASE TRY AGAIN AFTER COFFEE" : "ME AFTER ONE COMPLIMENT"))}</span></div>
+      ${artworkImagePath(art) ? artworkVisual(art, "meme-visual") : `<div class="art-visual meme-visual ${art.visual}" role="img" aria-label="${escapeHtml(art.caption || art.title)}. ${escapeHtml(art.punchline || art.description)}"><span class="meme-caption">${escapeHtml(art.caption || art.title.toUpperCase())}</span><span class="meme-caption">${escapeHtml(art.punchline || (art.id === "404-self" ? "PLEASE TRY AGAIN AFTER COFFEE" : "ME AFTER ONE COMPLIMENT"))}</span></div>`}
       <div class="card-body"><div class="card-meta"><span>↗ Demo trend ${art.trend}</span><span>MEME / ${art.year}</span></div><h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)} · Sample creator</p></div>
     </button><div class="reaction-row" role="group" aria-label="React to ${escapeHtml(art.title)}">${reactionTypes.map(type => `<button type="button" class="pill secondary" data-reaction="${type.id}" data-meme-id="${art.id}" aria-label="${type.label} reaction for ${escapeHtml(art.title)}" aria-pressed="${state.reactions[art.id] === type.id}"><span aria-hidden="true">${type.icon}</span> ${reactionCount(art, type)}</button>`).join("")}</div>
   </article>`).join("");
@@ -200,9 +263,9 @@ if (page === "memes") {
   renderMemes();
 }
 
-// Simulated NFT collection. No wallet, purchase, or blockchain is involved.
+// NFT gallery reactions and the browser-local collection view.
 let collectionOnly = new URLSearchParams(location.search).get("view") === "collection";
-function renderNfts(focusId) {
+function renderNfts() {
   const matches = artworks.filter(art => collectibleIds.has(art.id) && (!collectionOnly || state.collection.includes(art.id)));
   byId("nft-grid").innerHTML = matches.map(art => artworkCard(art, {collectible: true})).join("");
   byId("all-editions").setAttribute("aria-pressed", String(!collectionOnly));
@@ -210,7 +273,6 @@ function renderNfts(focusId) {
   byId("nft-count").textContent = `${matches.length} ${matches.length === 1 ? "edition" : "editions"} · ${collectionOnly ? "My simulated collection" : "All prototype editions"}`;
   byId("collection-empty").hidden = matches.length > 0;
   updateCollectionCounts();
-  if (focusId) (document.querySelector(`[data-collect-id="${focusId}"]`) || byId("nft-grid").querySelector("[data-collect-id]") || byId("browse-editions")).focus();
 }
 if (page === "nft") {
   const selectView = only => {
@@ -225,13 +287,23 @@ if (page === "nft") {
     byId("all-editions").focus();
   });
   byId("nft-grid").addEventListener("click", event => {
-    const button = event.target.closest("[data-collect-id]");
+    const button = event.target.closest("[data-nft-reaction-id]");
     if (!button) return;
-    const id = button.dataset.collectId;
-    toggleId(state.collection, id);
+    const id = button.dataset.nftReactionId;
+    const reacted = state.reactions[id] !== "love";
+    if (reacted) state.reactions[id] = "love";
+    else delete state.reactions[id];
     persistState();
-    renderNfts(id);
-    byId("collection-status").textContent = artworks.find(art => art.id === id).title + (state.collection.includes(id) ? " added to your simulated collection." : " removed from your simulated collection.");
+    const art = artworks.find(art => art.id === id);
+    const title = art.title;
+    const hearts = reactionCount(art, reactionTypes.find(type => type.id === "love"));
+    const label = `${reacted ? "Remove love reaction from" : "Love"} ${title}`;
+    button.setAttribute("aria-pressed", String(reacted));
+    button.setAttribute("aria-label", `${label}, ${hearts} ${hearts === 1 ? "heart" : "hearts"}`);
+    button.setAttribute("title", label);
+    button.querySelector("span").textContent = reacted ? "♥" : "♡";
+    button.querySelector("[data-nft-heart-count]").textContent = hearts;
+    byId("collection-status").textContent = reacted ? `Love reaction added to ${title}.` : `Reaction removed from ${title}.`;
   });
   renderNfts();
 }
@@ -240,33 +312,73 @@ if (page === "nft") {
 const dialog = byId("art-dialog");
 let activeArt = null;
 let lastTrigger = null;
+let modalArtworks = [];
 function updateSave() {
   const saved = state.saved.includes(activeArt.id);
   byId("save-art").setAttribute("aria-pressed", String(saved));
   byId("save-art").textContent = saved ? "Saved ✓ · Unsave" : "Save artwork";
 }
-function openArt(id, trigger) {
-  const art = artworks.find(item => item.id === id);
-  if (!art || !dialog) return;
+function renderModalArt(art) {
   activeArt = art;
-  lastTrigger = trigger;
-  byId("modal-preview").className = "art-visual modal-preview " + art.visual;
-  byId("modal-preview").setAttribute("aria-label", "Abstract artwork preview for " + art.title);
+  byId("modal-preview").className = "art-visual modal-preview " + (artworkImagePath(art) ? "has-card-image" : art.visual);
+  byId("modal-preview").innerHTML = artworkImageMarkup(art, false);
+  byId("modal-preview").setAttribute("aria-label", art.imageAlt || "Artwork preview for " + art.title);
   const details = {title: art.title, creator: "By " + art.creator + " · Fictional creator", description: art.description, category: art.category, collection: art.collection, year: art.year, edition: art.edition};
   for (const [key, value] of Object.entries(details)) byId("modal-" + key).textContent = value;
   byId("modal-feedback").textContent = "";
-  byId("view-collection").href = collectibleIds.has(id) ? "nft-gallery.html" : "memes.html";
-  byId("view-collection").textContent = collectibleIds.has(id) ? "NFT gallery ↗" : "More memes ↗";
+  byId("view-collection").href = collectibleIds.has(art.id) ? "nft-gallery.html" : "memes.html";
+  byId("view-collection").textContent = collectibleIds.has(art.id) ? "NFT gallery ↗" : "More memes ↗";
   updateSave();
+  byId("modal-thumbnails").querySelectorAll("button").forEach(button => {
+    button.setAttribute("aria-pressed", String(button.dataset.modalArtId === art.id));
+  });
+  byId("modal-position").textContent = `Artwork ${modalArtworks.findIndex(item => item.id === art.id) + 1} of ${modalArtworks.length}: ${art.title}`;
+}
+
+function openArt(id, trigger) {
+  const art = artworks.find(item => item.id === id);
+  if (!art || !dialog) return;
+  lastTrigger = trigger;
+  const host = byId(page === "nft" ? "nft-grid" : page === "explore" ? "art-grid" : page === "memes" ? "meme-gallery" : "");
+  const ids = host ? [...host.querySelectorAll("[data-art-id]")].map(card => card.dataset.artId) : artworks.map(item => item.id);
+  modalArtworks = [...new Set(ids)].map(itemId => artworks.find(item => item.id === itemId)).filter(Boolean);
+  if (!modalArtworks.some(item => item.id === id)) modalArtworks = [art];
+  byId("modal-thumbnails").innerHTML = modalArtworks.map(item => `<button type="button" class="modal-thumbnail" data-modal-art-id="${escapeHtml(item.id)}" aria-label="Preview ${escapeHtml(item.title)}" aria-pressed="false">${artworkVisual(item, "modal-thumbnail-visual")}</button>`).join("");
+  byId("modal-prev").disabled = modalArtworks.length < 2;
+  byId("modal-next").disabled = modalArtworks.length < 2;
+  renderModalArt(art);
+  dialog.scrollTop = 0;
   dialog.showModal();
   byId("modal-close").focus();
 }
+
+function stepModal(direction) {
+  if (modalArtworks.length < 2) return;
+  const index = modalArtworks.findIndex(art => art.id === activeArt.id);
+  renderModalArt(modalArtworks[(index + direction + modalArtworks.length) % modalArtworks.length]);
+  byId("modal-thumbnails").querySelector('[aria-pressed="true"]')?.scrollIntoView?.({block: "nearest", inline: "nearest"});
+}
+
 if (dialog) {
   document.addEventListener("click", event => {
     const card = event.target.closest("[data-art-id]");
     if (card) openArt(card.dataset.artId, card);
   });
   byId("modal-close").addEventListener("click", () => dialog.close());
+  byId("modal-prev").addEventListener("click", () => stepModal(-1));
+  byId("modal-next").addEventListener("click", () => stepModal(1));
+  byId("modal-thumbnails").addEventListener("click", event => {
+    const thumbnail = event.target.closest("[data-modal-art-id]");
+    if (thumbnail) renderModalArt(modalArtworks.find(art => art.id === thumbnail.dataset.modalArtId));
+  });
+  byId("modal-thumbnails").addEventListener("keydown", event => {
+    const thumbnail = event.target.closest("[data-modal-art-id]");
+    if (!thumbnail || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === "Home" || event.key === "End") renderModalArt(modalArtworks[event.key === "Home" ? 0 : modalArtworks.length - 1]);
+    else stepModal(event.key === "ArrowRight" ? 1 : -1);
+    byId("modal-thumbnails").querySelector('[aria-pressed="true"]').focus();
+  });
   dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener("close", () => { if (lastTrigger?.isConnected) lastTrigger.focus(); });
   byId("save-art").addEventListener("click", () => {
@@ -279,7 +391,7 @@ if (dialog) {
   // Refresh saved-filter results after the dialog closes without leaving stale cards.
   if (page === "explore") dialog.addEventListener("close", () => {
     if (activeFilter === "Saved") {
-      const id = activeArt?.id;
+      const id = lastTrigger?.dataset.artId || activeArt?.id;
       renderGallery();
       (document.querySelector(`[data-art-id="${id}"]`) || byId("filters").querySelector('[data-category="Saved"]')).focus();
     }
@@ -289,7 +401,7 @@ if (dialog) {
 // About: actual group members are configured separately from fictional artists.
 if (page === "about") {
   byId("team-grid").innerHTML = SITE_CONFIG.team.map((member, index) => `<article class="profile-card"><div class="profile-avatar" aria-hidden="true">${escapeHtml(member.initials)}</div><p class="eyebrow">Project team / 0${index + 1}</p><h3>${escapeHtml(member.name)}</h3><p class="creator-name">${escapeHtml(member.role)}</p></article>`).join("");
-  if (SITE_CONFIG.team.every(member => member.name !== "Member name to be added")) byId("team-note").textContent = "Meet the group bringing PIXELVERSE to life.";
+  if (SITE_CONFIG.team.every(member => member.name !== "Member name to be added")) byId("team-note").textContent = "Meet the group bringing Pixora to life.";
   byId("artist-profiles").innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Fictional demo creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
 }
 
@@ -330,7 +442,7 @@ if (page === "contact") {
     try { sessionStorage.setItem(draftKey, JSON.stringify(draft)); } catch { stored = false; }
     if (hasEmail) {
       const body = `From: ${draft.name}\nReply email: ${draft.email}\n\n${draft.message}`;
-      location.href = `mailto:${contactEmail}?subject=${encodeURIComponent("PIXELVERSE: " + draft.subject)}&body=${encodeURIComponent(body)}`;
+      location.href = `mailto:${contactEmail}?subject=${encodeURIComponent("Pixora: " + draft.subject)}&body=${encodeURIComponent(body)}`;
       byId("contact-status").textContent = "Email draft prepared. Review and send it in your email app; this website has not sent a message.";
     } else {
       byId("contact-status").textContent = stored
