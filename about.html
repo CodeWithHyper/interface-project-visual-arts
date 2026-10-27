@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meet the mission, vision, and project team behind PIXELVERSE.">
+  <meta name="theme-color" content="#100b1c">
+  <title>About Us — PIXELVERSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Syne:wght@500;600;700;800&amp;family=Unbounded:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-row">
+      <a class="brand" href="index.html" aria-label="PIXELVERSE home">PIXEL<span
+          aria-hidden="true">✳</span>VERSE</a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="memes.html">Memes</a>
+        <a href="nft-gallery.html">NFT Gallery</a>
+        <a href="about.html" aria-current="page">About Us</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="collection-link" href="nft-gallery.html?view=collection"
+        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+          data-collection-count>0</span></a>
+      <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
+        aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+    </div>
+    <nav class="mobile-nav shell" id="mobile-nav" aria-label="Mobile navigation" hidden><a
+        href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="memes.html">Memes</a>
+      <a href="nft-gallery.html">NFT Gallery</a>
+      <a href="about.html" aria-current="page">About Us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="shell page-intro">
+      <p class="eyebrow">About us / The idea behind the pixels</p>
+      <h1>A shared space.<br>A thousand perspectives.</h1>
+      <p class="intro-copy muted">PIXELVERSE brings digital art, internet humor, and collectible experiments
+        into one creative playground.</p>
+    </section>
+    <section class="shell section gallery-section about-story">
+      <div class="story-art art-visual visual-window" role="img"
+        aria-label="An abstract open window symbolizing creative possibilities"></div>
+      <div>
+        <p class="eyebrow">Our story</p>
+        <h2>The internet is a canvas we make together.</h2>
+        <p class="muted">A meme can capture a shared feeling. An illustration can open a new perspective. A
+          digital collectible can ask what it means to value an image. We built PIXELVERSE to put those
+          conversations in the same room.</p>
+        <p class="muted">Created as an academic visual arts project, this platform explores how humor,
+          identity, and technology shape contemporary visual culture.</p><a class="text-link"
+          href="explore.html">See the creative archive ↗</a>
+      </div>
+    </section>
+    <section class="section section-tinted">
+      <div class="shell mission-grid">
+        <article>
+          <p class="eyebrow">01 / Our mission</p>
+          <h2>Make creativity<br>feel accessible.</h2>
+          <p class="muted">Invite people to discover digital expression, understand its visual language, and
+            participate through simple, playful experiences.</p>
+        </article>
+        <article>
+          <p class="eyebrow">02 / Our vision</p>
+          <h2>More perspectives.<br>More possibilities.</h2>
+          <p class="muted">Imagine an inclusive digital space where original ideas, shared humor, and
+            thoughtful creative work can exist side by side.</p>
+        </article>
+      </div>
+    </section>
+    <section class="shell section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The project team</p>
+          <h2>People behind the pixels.</h2>
+        </div>
+      </div>
+      <p class="section-description muted" id="team-note">Group member details are being added. The roles
+        below show the project’s areas of work.</p>
+      <div class="art-grid" id="team-grid"></div>
+    </section>
+    <section class="shell section compact-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Sample creators / Fictional profiles</p>
+          <h2>Voices in the demo.</h2>
+        </div>
+      </div>
+      <p class="section-description muted">These creative personas accompany the prototype artworks and are
+        separate from the project team.</p>
+      <div class="art-grid" id="artist-profiles"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><a class="brand" href="index.html">PIXEL<span aria-hidden="true">✳</span>VERSE</a>
+        <p class="muted">A shared space for art, humor, and digital imagination.</p>
+      </div>
+      <div>
+        <h2 class="eyebrow">Find your corner</h2>
+        <div class="footer-links"><a href="explore.html">Explore artworks ↗</a><a href="memes.html">Find your
+            next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
+      </div>
+      <div>
+        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <div class="social-links" data-social-links></div>
+      </div>
+    </div>
+    <div class="shell footer-bottom"><span>© 2026 PIXELVERSE · Academic prototype</span><span>Original CSS
+        illustrations · Sample creators & demo trends</span></div>
+  </footer>
+
+  <p class="storage-notice shell" id="storage-notice" role="status" hidden></p>
+  <noscript>
+    <p class="shell feedback">Please enable JavaScript for galleries, reactions, collection controls, and the
+      contact form.</p>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore internet humor and react to prototype memes.">
+  <meta name="theme-color" content="#100b1c">
+  <title>Memes — PIXELVERSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Syne:wght@500;600;700;800&amp;family=Unbounded:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body data-page="memes">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-row">
+      <a class="brand" href="index.html" aria-label="PIXELVERSE home">PIXEL<span
+          aria-hidden="true">✳</span>VERSE</a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="memes.html" aria-current="page">Memes</a>
+        <a href="nft-gallery.html">NFT Gallery</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="collection-link" href="nft-gallery.html?view=collection"
+        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+          data-collection-count>0</span></a>
+      <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
+        aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+    </div>
+    <nav class="mobile-nav shell" id="mobile-nav" aria-label="Mobile navigation" hidden><a
+        href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="memes.html" aria-current="page">Memes</a>
+      <a href="nft-gallery.html">NFT Gallery</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="shell page-intro">
+      <p class="eyebrow">Meme mode / Internet humor</p>
+      <h1>Serious about unserious.</h1>
+      <p class="intro-copy muted">For the jokes that get us, the tabs we never close, and the very online
+        moments we share.</p>
+    </section>
+    <section class="shell section gallery-section">
+      <div class="meme-banner"><span class="meme-banner-icon" aria-hidden="true">☺</span>
+        <div>
+          <p class="eyebrow">Trending in this demo</p>
+          <h2 id="trending-meme-title"></h2>
+          <p class="muted">Sample popularity, real relatability. Leave your reaction below.</p>
+        </div><a class="pill secondary" href="#meme-gallery">Find your mood ↓</a>
+      </div>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The shared folder of feelings</p>
+          <h2>Fresh from the feed.</h2>
+        </div>
+        <div class="sort-field"><label for="meme-sort">Sort memes</label><select id="meme-sort">
+            <option value="trending">Trending (demo)</option>
+            <option value="reactions">Most reactions</option>
+            <option value="title">Title A–Z</option>
+          </select></div>
+      </div>
+      <p class="section-description muted">Reaction totals start with sample counts. Your choices are saved in
+        this browser.</p>
+      <div class="art-grid" id="meme-gallery"></div>
+      <p class="sr-only" id="reaction-status" role="status"></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><a class="brand" href="index.html">PIXEL<span aria-hidden="true">✳</span>VERSE</a>
+        <p class="muted">A shared space for art, humor, and digital imagination.</p>
+      </div>
+      <div>
+        <h2 class="eyebrow">Find your corner</h2>
+        <div class="footer-links"><a href="explore.html">Explore artworks ↗</a><a href="memes.html">Find your
+            next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
+      </div>
+      <div>
+        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <div class="social-links" data-social-links></div>
+      </div>
+    </div>
+    <div class="shell footer-bottom"><span>© 2026 PIXELVERSE · Academic prototype</span><span>Original CSS
+        illustrations · Sample creators & demo trends</span></div>
+  </footer>
+  <dialog id="art-dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+    <div class="modal-grid">
+      <div class="art-visual modal-preview" id="modal-preview" role="img"></div>
+      <div class="modal-content">
+        <div class="section-heading"><span class="eyebrow">Artwork / Prototype</span><button
+            class="pill secondary icon-button" id="modal-close" type="button"
+            aria-label="Close artwork details">✕</button></div>
+        <h2 id="modal-title"></h2>
+        <p id="modal-creator" class="creator-name"></p>
+        <p id="modal-description" class="muted"></p>
+        <dl class="art-details">
+          <div>
+            <dt>Category</dt>
+            <dd id="modal-category"></dd>
+          </div>
+          <div>
+            <dt>Collection</dt>
+            <dd id="modal-collection"></dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd id="modal-year"></dd>
+          </div>
+          <div>
+            <dt>Edition</dt>
+            <dd id="modal-edition"></dd>
+          </div>
+        </dl>
+        <p class="field-hint">Sample artwork by a fictional creator. No minted token or ownership is offered.
+        </p>
+        <div class="button-row"><button class="pill solid" id="save-art" type="button"
+            aria-pressed="false">Save artwork</button><a class="pill secondary" id="view-collection"
+            href="nft-gallery.html">NFT gallery ↗</a></div>
+        <p class="feedback" id="modal-feedback" role="status"></p>
+      </div>
+    </div>
+  </dialog>
+  <p class="storage-notice shell" id="storage-notice" role="status" hidden></p>
+  <noscript>
+    <p class="shell feedback">Please enable JavaScript for galleries, reactions, collection controls, and the
+      contact form.</p>
+  </noscript>
+</body>
+</html>

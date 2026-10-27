@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Connect with the PIXELVERSE project team.">
+  <meta name="theme-color" content="#100b1c">
+  <title>Contact — PIXELVERSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Syne:wght@500;600;700;800&amp;family=Unbounded:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body data-page="contact">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-row">
+      <a class="brand" href="index.html" aria-label="PIXELVERSE home">PIXEL<span
+          aria-hidden="true">✳</span>VERSE</a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="memes.html">Memes</a>
+        <a href="nft-gallery.html">NFT Gallery</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+      <a class="collection-link" href="nft-gallery.html?view=collection"
+        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+          data-collection-count>0</span></a>
+      <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
+        aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+    </div>
+    <nav class="mobile-nav shell" id="mobile-nav" aria-label="Mobile navigation" hidden><a
+        href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="memes.html">Memes</a>
+      <a href="nft-gallery.html">NFT Gallery</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="shell page-intro">
+      <p class="eyebrow">Contact / Let’s connect</p>
+      <h1>Good ideas start<br>with a conversation.</h1>
+      <p class="intro-copy muted">Have a question, a creative thought, or feedback on the project? We’d love
+        to hear it.</p>
+    </section>
+    <section class="shell section gallery-section contact-grid">
+      <div class="contact-panel">
+        <p class="eyebrow">Drop us a line</p>
+        <h2>What’s on your mind?</h2>
+        <p class="muted" id="contact-note">This prototype saves your message as a draft in this tab. Messages
+          are not sent to the team yet.</p>
+        <form id="contact-form">
+          <div class="form-row">
+            <div class="field"><label for="contact-name">Your name</label><input id="contact-name" name="name"
+                autocomplete="name" required maxlength="100" placeholder="How should we call you?"></div>
+            <div class="field"><label for="contact-email">Email address</label><input id="contact-email"
+                name="email" type="email" autocomplete="email" required maxlength="254"
+                placeholder="you@example.com"></div>
+          </div>
+          <div class="field"><label for="contact-subject">Subject</label><select id="contact-subject"
+              name="subject" required>
+              <option value="">Choose a topic</option>
+              <option>General question</option>
+              <option>Creative collaboration</option>
+              <option>Project feedback</option>
+              <option>Something else</option>
+            </select></div>
+          <div class="field"><label for="contact-message">Your message</label><textarea id="contact-message"
+              name="message" rows="6" required minlength="10" maxlength="3000"
+              placeholder="Tell us a little about your idea…"></textarea><span class="field-hint">At least 10
+              characters.</span></div>
+          <div class="button-row"><button type="submit" class="pill solid" id="contact-submit" disabled>Save
+              message draft ↗</button><button type="button" class="text-link" id="clear-draft">Clear
+              draft</button></div>
+          <p class="feedback" id="contact-status" role="status"></p>
+        </form>
+      </div>
+      <aside class="contact-aside">
+        <div class="contact-info"><span class="contact-symbol" aria-hidden="true">✳</span>
+          <p class="eyebrow">Stay in the loop</p>
+          <h2>Find us around<br>the internet.</h2>
+          <p class="muted" id="social-note">Our team’s social profiles will appear here when they’re ready.
+          </p>
+          <div class="social-stack" data-social-links></div>
+        </div>
+        <div class="contact-info">
+          <p class="eyebrow">Team email</p>
+          <p id="team-email" class="muted">Contact address coming soon.</p>
+          <p class="field-hint">This is an academic project. All gallery artworks and collectible editions are
+            prototypes.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><a class="brand" href="index.html">PIXEL<span aria-hidden="true">✳</span>VERSE</a>
+        <p class="muted">A shared space for art, humor, and digital imagination.</p>
+      </div>
+      <div>
+        <h2 class="eyebrow">Find your corner</h2>
+        <div class="footer-links"><a href="explore.html">Explore artworks ↗</a><a href="memes.html">Find your
+            next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
+      </div>
+      <div>
+        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <div class="social-links" data-social-links></div>
+      </div>
+    </div>
+    <div class="shell footer-bottom"><span>© 2026 PIXELVERSE · Academic prototype</span><span>Original CSS
+        illustrations · Sample creators & demo trends</span></div>
+  </footer>
+
+  <p class="storage-notice shell" id="storage-notice" role="status" hidden></p>
+  <noscript>
+    <p class="shell feedback">Please enable JavaScript for galleries, reactions, collection controls, and the
+      contact form.</p>
+  </noscript>
+</body>
+</html>

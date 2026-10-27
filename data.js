@@ -1,0 +1,176 @@
+"use strict";
+
+// Prototype content. Trend scores and reaction counts are illustrative.
+const PIXELVERSE_DATA = {
+  "artworks": [
+    {
+      "id": "loading-identity",
+      "title": "Loading Identity",
+      "creator": "Mira",
+      "description": "An unfinished avatar becomes a portrait of the selves we build, revise, and share online.",
+      "category": "Digital Art",
+      "collection": "The Digital Noise Collection",
+      "year": "2026",
+      "edition": "Prototype 01 / 12",
+      "visual": "visual-identity",
+      "featured": true,
+      "trend": 94,
+      "reactions": 28
+    },
+    {
+      "id": "screenshot-feeling",
+      "title": "Screenshot of a Feeling",
+      "creator": "Nox",
+      "description": "A captured moment of affection and absurdity, layered like a memory saved to a desktop.",
+      "category": "Illustrations",
+      "collection": "Soft Signals",
+      "year": "2026",
+      "edition": "Prototype 02 / 12",
+      "visual": "visual-feeling",
+      "featured": false,
+      "trend": 72,
+      "reactions": 16
+    },
+    {
+      "id": "main-character",
+      "title": "Main Character Energy",
+      "creator": "Juno",
+      "description": "A playful portrait of performance, confidence, and the language of online self-expression.",
+      "category": "Memes",
+      "collection": "The Digital Noise Collection",
+      "year": "2026",
+      "edition": "Prototype 03 / 12",
+      "visual": "visual-main",
+      "featured": true,
+      "trend": 99,
+      "reactions": 42
+    },
+    {
+      "id": "offline-online",
+      "title": "Offline but Still Online",
+      "creator": "Mira",
+      "description": "A floating screen captures the odd feeling of being disconnected yet never entirely away.",
+      "category": "3D",
+      "collection": "After the Feed",
+      "year": "2026",
+      "edition": "Prototype 04 / 12",
+      "visual": "visual-offline",
+      "featured": false,
+      "trend": 67,
+      "reactions": 13
+    },
+    {
+      "id": "404-self",
+      "title": "404: Self Not Found",
+      "creator": "Nox",
+      "description": "A familiar error message becomes a visual joke about identity, absence, and digital expectations.",
+      "category": "Memes",
+      "collection": "The Digital Noise Collection",
+      "year": "2026",
+      "edition": "Prototype 05 / 12",
+      "visual": "visual-404",
+      "featured": true,
+      "trend": 91,
+      "reactions": 35
+    },
+    {
+      "id": "infinite-refresh",
+      "title": "Infinite Refresh",
+      "creator": "Juno",
+      "description": "A looping composition about the rhythm of scrolling and the promise of something new.",
+      "category": "Animated",
+      "collection": "After the Feed",
+      "year": "2026",
+      "edition": "Prototype 06 / 12",
+      "visual": "visual-loop",
+      "featured": false,
+      "trend": 88,
+      "reactions": 24
+    },
+    {
+      "id": "open-tabs",
+      "title": "Open Tabs, Open Mind",
+      "creator": "Mira",
+      "description": "A geometric window into the many simultaneous spaces of a connected imagination.",
+      "category": "Digital Art",
+      "collection": "Soft Signals",
+      "year": "2026",
+      "edition": "Prototype 07 / 12",
+      "visual": "visual-window",
+      "featured": false,
+      "trend": 76,
+      "reactions": 19
+    },
+    {
+      "id": "buffering-brain",
+      "title": "Brain.exe Has Stopped",
+      "creator": "Nox",
+      "description": "When you open the exam and the loading screen opens you.",
+      "category": "Memes",
+      "collection": "Everyday Internet",
+      "year": "2026",
+      "edition": "Prototype 08 / 12",
+      "visual": "visual-offline",
+      "featured": false,
+      "trend": 97,
+      "reactions": 51,
+      "caption": "ME TRYING TO REMEMBER",
+      "punchline": "THE THING I JUST STUDIED"
+    },
+    {
+      "id": "one-more-tab",
+      "title": "Just One More Tab",
+      "creator": "Mira",
+      "description": "A small tribute to the 47 tabs we are definitely going to read later.",
+      "category": "Memes",
+      "collection": "Everyday Internet",
+      "year": "2026",
+      "edition": "Prototype 09 / 12",
+      "visual": "visual-window",
+      "featured": false,
+      "trend": 85,
+      "reactions": 31,
+      "caption": "I HAVE EVERYTHING",
+      "punchline": "UNDER CTRL + T"
+    },
+    {
+      "id": "deadline-mode",
+      "title": "Deadline Mode: Activated",
+      "creator": "Juno",
+      "description": "Nothing inspires creativity quite like a deadline in eleven minutes.",
+      "category": "Memes",
+      "collection": "Everyday Internet",
+      "year": "2026",
+      "edition": "Prototype 10 / 12",
+      "visual": "visual-loop",
+      "featured": false,
+      "trend": 93,
+      "reactions": 46,
+      "caption": "THREE WEEKS TO CREATE",
+      "punchline": "STARTS AT 11:49 PM"
+    }
+  ],
+  "artists": [
+    {
+      "name": "Mira",
+      "role": "Digital image-maker",
+      "symbol": "◈",
+      "theme": "artist-mira",
+      "description": "A fictional prototype persona exploring avatars, interfaces, and shifting online identities."
+    },
+    {
+      "name": "Nox",
+      "role": "Meme & visual storyteller",
+      "symbol": "✳",
+      "theme": "artist-nox",
+      "description": "A fictional prototype persona translating internet humor into expressive visual compositions."
+    },
+    {
+      "name": "Juno",
+      "role": "Motion & shape artist",
+      "symbol": "◎",
+      "theme": "artist-juno",
+      "description": "A fictional prototype persona working with loops, bright forms, and everyday screen culture."
+    }
+  ]
+};

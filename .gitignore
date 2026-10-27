@@ -1,0 +1,19 @@
+# Local tools and credentials
+.agents/
+.codex/
+.aws/
+.env
+.env.*
+!.env.example
+
+# Accidental nested checkout
+/https:/
+
+# Dependencies and generated Python files
+node_modules/
+__pycache__/
+*.py[cod]
+
+# Operating system files
+.DS_Store
+Thumbs.db
