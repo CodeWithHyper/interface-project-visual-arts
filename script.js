@@ -59,9 +59,11 @@ function toggleId(list, id) {
 
 function artworkImagePath(art) {
   if (typeof art.image !== "string" || !art.image.trim()) return "";
+  const src = art.image.trim();
+  // Allow relative paths (local assets) directly
+  if (!src.startsWith("http://") && !src.startsWith("https://")) return src;
   try {
-    const src = art.image.trim();
-    const url = new URL(src, "https://pixora.local/");
+    const url = new URL(src);
     return ["http:", "https:"].includes(url.protocol) ? src : "";
   } catch { return ""; }
 }
