@@ -402,7 +402,15 @@ if (dialog) {
 
 // About: actual group members are configured separately from fictional artists.
 if (page === "about") {
-  byId("team-grid").innerHTML = SITE_CONFIG.team.map((member, index) => `<article class="profile-card"><div class="profile-avatar" aria-hidden="true">${escapeHtml(member.initials)}</div><p class="eyebrow">Project team / 0${index + 1}</p><h3>${escapeHtml(member.name)}</h3><p class="creator-name">${escapeHtml(member.role)}</p></article>`).join("");
+  const teamAvatar = member => {
+    if (!member.photo) return `<div class="profile-avatar" aria-hidden="true">${escapeHtml(member.initials)}</div>`;
+    const crop = [
+      member.photoPosition && `--photo-position: ${member.photoPosition}`,
+      member.photoZoom && `--photo-zoom: ${Number(member.photoZoom) || 1}`
+    ].filter(Boolean).join("; ");
+    return `<div class="profile-avatar profile-photo"><img src="${escapeHtml(member.photo)}" alt="Portrait of ${escapeHtml(member.name)}" loading="lazy" decoding="async"${crop ? ` style="${escapeHtml(crop)}"` : ""}></div>`;
+  };
+  byId("team-grid").innerHTML = SITE_CONFIG.team.map((member, index) => `<article class="profile-card">${teamAvatar(member)}<p class="eyebrow">Project team / ${String(index + 1).padStart(2, "0")}</p><h3>${escapeHtml(member.name)}</h3>${member.role ? `<p class="creator-name">${escapeHtml(member.role)}</p>` : ""}</article>`).join("");
   if (SITE_CONFIG.team.every(member => member.name !== "Member name to be added")) byId("team-note").textContent = "Meet the group bringing Pixora to life.";
   byId("artist-profiles").innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Fictional demo creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
 }
