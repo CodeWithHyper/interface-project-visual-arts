@@ -28,40 +28,41 @@ const SITE_CONFIG = {
       "name": "Prinze Kyle Santiago",
       "role": "Facilitator & Writer",
       "initials": "PS",
-      "photo": "assets/images/people_images/Prinze_Kyle_Santiago.jpg",
-      "photoPosition": "63% 67%",
-      "photoZoom": 1.11
+      "photo": "assets/images/people_images/Prinze_Kyle_Santiago.png",
+      "photoPosition": "50% 48%",
+      "photoZoom": 1.1
     },
     {
       "name": "Randel Thomas Babao",
       "role": "Researcher",
       "initials": "RB",
-      "photo": "assets/images/people_images/Randel_Thomas_Babao.jpg",
-      "photoPosition": "center 0%"
+      "photo": "assets/images/people_images/Randel_Thomas_Babao.png",
+      "photoPosition": "52% 31%",
+      "photoZoom": 1.1
     },
     {
       "name": "Arlette Tuastumban",
       "role": "Designer",
       "initials": "AT",
       "photo": "assets/images/people_images/Arlette_Tuastumban.png",
-      "photoPosition": "47% 39%",
-      "photoZoom": 3.2
+      "photoPosition": "52% 31%",
+      "photoZoom": 1.1
     },
     {
       "name": "David E. Valdepeña",
       "role": "Designer",
       "initials": "DV",
-      "photo": "assets/images/people_images/David_Valdepena.jpg",
-      "photoPosition": "63% 0%",
+      "photo": "assets/images/people_images/David_Erwin_Valdepena.png",
+      "photoPosition": "52% 29%",
       "photoZoom": 1.1
     },
     {
       "name": "Ginobbli Alfred Macasadia",
       "role": "Writer",
       "initials": "GM",
-      "photo": "assets/images/people_images/Ginobbli_Alfred_Macasadia.jpg",
-      "photoPosition": "46% 21%",
-      "photoZoom": 1.2
+      "photo": "assets/images/people_images/Ginobbli_Alfred_Macasadia.png",
+      "photoPosition": "52% 54%",
+      "photoZoom": 1.1
     }
   ]
 };
