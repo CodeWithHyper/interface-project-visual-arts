@@ -429,7 +429,9 @@ if (page === "about") {
   };
   byId("team-grid").innerHTML = SITE_CONFIG.team.map((member, index) => `<article class="profile-card">${teamAvatar(member)}<p class="eyebrow">Project team / ${String(index + 1).padStart(2, "0")}</p><h3>${escapeHtml(member.name)}</h3>${member.role ? `<p class="creator-name">${escapeHtml(member.role)}</p>` : ""}</article>`).join("");
   if (SITE_CONFIG.team.every(member => member.name !== "Member name to be added")) byId("team-note").textContent = "Meet the group bringing Pixora to life.";
-  byId("artist-profiles").innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Featured creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
+  // The artist list section was removed from about.html; skip it instead of crashing the rest of the script.
+  const artistHost = byId("artist-profiles");
+  if (artistHost) artistHost.innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Featured creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
 }
 
 // Contact: save a local draft, or hand off to an email app when an address is configured.
@@ -484,3 +486,48 @@ if (page === "contact") {
     byId("contact-name").focus();
   });
 }
+
+// Motion: header depth on scroll, and content that fades up as it enters the viewport.
+// Runs last so the cards rendered above are already in the page.
+(() => {
+  const header = document.querySelector(".site-header");
+  const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 8);
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, {passive: true});
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+
+  const selector = [
+    ".section-heading", ".section-description", ".art-grid > *", ".manifesto-item", ".mission-card",
+    ".about-story > *", ".meme-banner", ".collection-banner", ".invite-panel", ".contact-panel",
+    ".contact-info", ".search-toolbar", ".filter-row", ".footer-grid > *"
+  ].join(",");
+
+  // Once revealed, drop the classes so each element's own hover transitions apply again.
+  const settle = event => {
+    const el = event.currentTarget;
+    if (event.target !== el) return;
+    el.removeEventListener("transitionend", settle);
+    el.classList.remove("reveal", "is-visible");
+    el.style.removeProperty("--reveal-delay");
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    let order = 0;
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      observer.unobserve(el);
+      // Stagger elements that come into view together.
+      el.style.setProperty("--reveal-delay", `${Math.min(order++, 6) * 80}ms`);
+      el.addEventListener("transitionend", settle);
+      el.classList.add("is-visible");
+    });
+  }, {rootMargin: "0px 0px -5% 0px", threshold: 0.1});
+
+  document.querySelectorAll(selector).forEach(el => {
+    if (el.closest(".hero, .page-intro, dialog")) return;
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+})();

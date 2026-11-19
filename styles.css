@@ -1280,7 +1280,11 @@ textarea {
   height: auto;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #162840;
+  /* Portraits are cut out, so this brand-tinted backdrop shows behind them. */
+  background:
+    radial-gradient(circle at 50% 30%, #38eef22e, transparent 55%),
+    radial-gradient(circle at 100% 100%, #b5a0ff38, transparent 60%),
+    linear-gradient(160deg, #1d3557, #171e37 55%, #2a1a40);
 }
 
 .profile-photo img {
@@ -2323,5 +2327,204 @@ dialog::backdrop {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Motion
+   Every animation here is switched off by the prefers-reduced-motion rule
+   above, and the scroll reveals only hide content once script.js has run.
+   ========================================================================== */
+
+:root {
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Page entrance: hero copy and page intros rise in, one line after another. */
+.hero-copy > *,
+.page-intro > * {
+  animation: rise .8s var(--ease-out) both;
+}
+
+.hero-copy > :nth-child(2),
+.page-intro > :nth-child(2) {
+  animation-delay: .08s;
+}
+
+.hero-copy > :nth-child(3),
+.page-intro > :nth-child(3) {
+  animation-delay: .16s;
+}
+
+.hero-copy > :nth-child(4),
+.page-intro > :nth-child(4) {
+  animation-delay: .24s;
+}
+
+/* Hero collage: artworks drop in, then drift gently. Uses the individual
+   translate/scale properties so each card keeps its rotate() tilt. */
+.hero-halo {
+  animation: fade-in 1s .1s var(--ease-out) both;
+}
+
+/* The float uses transform (with each card's tilt written into its keyframes);
+   a looping `translate` left the PNG artwork unpainted in some renderers. */
+.hero-art-one {
+  animation: card-in .9s .2s var(--ease-out) both, drift-left 7s 1.2s ease-in-out infinite;
+}
+
+.hero-art-two {
+  animation: card-in .9s .35s var(--ease-out) both, drift-right 6s 1.5s ease-in-out infinite;
+}
+
+.hero-sticker {
+  animation: pop-in .6s .8s var(--ease-spring) both, bob 4s 1.6s ease-in-out infinite;
+}
+
+.hero-caption {
+  animation: fade-in .6s 1s var(--ease-out) both;
+}
+
+/* Slow shimmer across the gradient words in the home headline. */
+.hero h1 span {
+  background-size: 200% 100%;
+  animation: shimmer 6s ease-in-out infinite alternate;
+}
+
+/* Nav links: underline slides in on hover. */
+.desktop-nav a {
+  position: relative;
+  padding-block: 12px;
+  transition: color .2s ease;
+}
+
+.desktop-nav a:not([aria-current="page"])::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--action-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s var(--ease-out);
+}
+
+.desktop-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Logo: a little lift on hover. */
+.brand-logo {
+  transition: transform .3s var(--ease-spring), filter .3s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-2px) scale(1.03);
+  filter: drop-shadow(0 6px 18px #b5a0ff40);
+}
+
+/* Header gains depth once the page scrolls. */
+.site-header {
+  transition: box-shadow .3s ease, background-color .3s ease;
+}
+
+.site-header.is-scrolled {
+  background: #0a0f1ff5;
+  box-shadow: 0 10px 30px #02051199;
+}
+
+/* Scroll reveal (classes added by script.js). */
+.reveal {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity .7s var(--ease-out) var(--reveal-delay, 0ms), translate .7s var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Card images zoom slightly on hover. */
+.art-card .card-image,
+.story-art .card-image {
+  transition: transform .6s var(--ease-out);
+}
+
+.art-card:hover .card-image,
+.story-art:hover .card-image {
+  transform: scale(1.04);
+}
+
+.profile-photo img {
+  transition: transform .5s var(--ease-out);
+}
+
+.profile-card:hover .profile-photo img {
+  transform: scale(calc(var(--photo-zoom, 1) * 1.05));
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    translate: 0 48px;
+    scale: .9;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    scale: .6;
+  }
+}
+
+@keyframes drift-left {
+  0%, 100% {
+    transform: rotate(-9deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-7.5deg) translateY(-12px);
+  }
+}
+
+@keyframes drift-right {
+  0%, 100% {
+    transform: rotate(9deg) translateY(-10px);
+  }
+
+  50% {
+    transform: rotate(10.5deg) translateY(0);
+  }
+}
+
+@keyframes bob {
+  0%, 100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
   }
 }

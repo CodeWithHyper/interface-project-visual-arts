@@ -30,9 +30,9 @@ const SITE_CONFIG = {
   "team": [
     {
       "name": "Prinze Kyle Santiago",
-      "role": "Project Coordinator & Content Writer",
+      "role": "Project Coordinator",
       "initials": "PS",
-      "photo": "assets/images/people_images/Prinze_Kyle_Santiago.png",
+      "photo": "assets/images/people_images/cutout/Prinze_Kyle_Santiago.png",
       "photoPosition": "50% 48%",
       "photoZoom": 1.1
     },
@@ -40,7 +40,7 @@ const SITE_CONFIG = {
       "name": "Randel Thomas Babao",
       "role": "Research Analyst",
       "initials": "RB",
-      "photo": "assets/images/people_images/Randel_Thomas_Babao.png",
+      "photo": "assets/images/people_images/cutout/Randel_Thomas_Babao.png",
       "photoPosition": "52% 31%",
       "photoZoom": 1.1
     },
@@ -48,7 +48,7 @@ const SITE_CONFIG = {
       "name": "Arlette Tuastumban",
       "role": "Visual & UI Designer",
       "initials": "AT",
-      "photo": "assets/images/people_images/Arlette_Tuastumban.png",
+      "photo": "assets/images/people_images/cutout/Arlette_Tuastumban.png",
       "photoPosition": "52% 31%",
       "photoZoom": 1.1
     },
@@ -56,7 +56,7 @@ const SITE_CONFIG = {
       "name": "David Erwin Valdepeña",
       "role": "Lead Web Developer & Designer",
       "initials": "DV",
-      "photo": "assets/images/people_images/David_Erwin_Valdepena.png",
+      "photo": "assets/images/people_images/cutout/David_Erwin_Valdepena.png",
       "photoPosition": "52% 29%",
       "photoZoom": 1.1
     },
@@ -64,7 +64,7 @@ const SITE_CONFIG = {
       "name": "Ginobbli Alfred Macasadia",
       "role": "Content Writer",
       "initials": "GM",
-      "photo": "assets/images/people_images/Ginobbli_Alfred_Macasadia.png",
+      "photo": "assets/images/people_images/cutout/Ginobbli_Alfred_Macasadia.png",
       "photoPosition": "52% 54%",
       "photoZoom": 1.1
     }
