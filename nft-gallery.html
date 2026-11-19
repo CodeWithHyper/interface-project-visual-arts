@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Build a simulated collection of digital artwork editions.">
+  <meta name="description" content="Build your own collection of digital artwork editions.">
   <meta name="theme-color" content="#080b16">
   <title>NFT Gallery - Pixora</title>
   <link rel="icon" href="assets/images/brand/favicon.ico">
@@ -22,7 +22,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="shell header-row">
-      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
       <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
         <a href="explore.html">Explore</a>
         <a href="memes.html">Memes</a>
@@ -31,7 +31,7 @@
         <a href="contact.html">Contact</a>
       </nav>
       <a class="collection-link" href="nft-gallery.html?view=collection"
-        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+        aria-label="My collection">◈ <span class="collection-label">My collection</span> <span
           data-collection-count>0</span></a>
       <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
         aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
@@ -47,16 +47,16 @@
   </header>
   <main id="main">
     <section class="shell page-intro">
-      <p class="eyebrow">NFT gallery / A collectible experiment</p>
+      <p class="eyebrow">NFT gallery / Digital collectibles</p>
       <h1>Collect a little imagination.</h1>
-      <p class="intro-copy muted">Explore digital editions and meet their sample creators. Build a simulated
+      <p class="intro-copy muted">Explore digital editions and meet their creators. Build your own
         collection with a single click.</p>
     </section>
     <section class="shell section gallery-section">
       <div class="collection-banner">
         <div><span class="eyebrow">Your corner of Pixora</span>
           <h2><span data-collection-count>0</span> <span id="collection-noun">works</span> collected</h2>
-          <p class="muted">A browser-local collection. No payment, wallet, minting, or ownership transfer.</p>
+          <p class="muted">Saved right in your browser. No wallet or payment needed.</p>
         </div>
         <div class="filter-row" role="group" aria-label="Collectible view"><button class="pill secondary"
             id="all-editions" type="button" aria-pressed="true">All editions</button><button
@@ -75,7 +75,7 @@
   </main>
   <footer class="site-footer">
     <div class="shell footer-grid">
-      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
         <p class="muted">A shared space for art, humor, and digital imagination.</p>
       </div>
       <div>
@@ -84,12 +84,13 @@
             next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
       </div>
       <div>
-        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <h2 class="eyebrow">Keep in touch</h2>
+        <div class="footer-links"><a href="contact.html">Contact us ↗</a><a href="about.html">Meet the team ↗</a></div>
         <div class="social-links" data-social-links></div>
       </div>
     </div>
-    <div class="shell footer-bottom"><span>© 2026 Pixora · Academic prototype</span><span>Original CSS
-        illustrations · Sample creators & demo trends</span></div>
+    <div class="shell footer-bottom"><span>© 2026 Pixora</span><span>Featured artworks and memes belong to their
+        respective creators</span><a class="back-to-top" href="#main">Back to top ↑</a></div>
   </footer>
   <dialog id="art-dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
     <div class="modal-toolbar">
@@ -104,7 +105,7 @@
         <div class="art-visual modal-preview" id="modal-preview" role="img"></div>
       </div>
       <div class="modal-content">
-        <div class="section-heading"><span class="eyebrow">Artwork / Prototype</span></div>
+        <div class="section-heading"><span class="eyebrow">Artwork details</span></div>
         <h2 id="modal-title"></h2>
         <p id="modal-creator" class="creator-name"></p>
         <p id="modal-description" class="muted"></p>
@@ -126,8 +127,7 @@
             <dd id="modal-edition"></dd>
           </div>
         </dl>
-        <p class="field-hint">Sample artwork by a fictional creator. No minted token or ownership is offered.
-        </p>
+        <p class="field-hint">Shown for viewing only. Pixora does not sell artworks or transfer ownership.</p>
         <div class="button-row"><button class="pill solid" id="save-art" type="button"
             aria-pressed="false">Save artwork</button><a class="pill secondary" id="view-collection"
             href="nft-gallery.html">NFT gallery ↗</a></div>

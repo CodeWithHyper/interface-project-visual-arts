@@ -22,7 +22,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="shell header-row">
-      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
       <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
         <a href="explore.html" aria-current="page">Explore</a>
         <a href="memes.html">Memes</a>
@@ -31,7 +31,7 @@
         <a href="contact.html">Contact</a>
       </nav>
       <a class="collection-link" href="nft-gallery.html?view=collection"
-        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+        aria-label="My collection">◈ <span class="collection-label">My collection</span> <span
           data-collection-count>0</span></a>
       <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
         aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
@@ -59,7 +59,7 @@
             placeholder="Search artwork, creator, or collection…" autocomplete="off"></div>
         <div class="sort-field"><label for="art-sort">Sort by</label><select id="art-sort">
             <option value="featured">Featured first</option>
-            <option value="trending">Trending (demo)</option>
+            <option value="trending">Trending</option>
             <option value="title">Title A–Z</option>
           </select></div>
       </form>
@@ -75,7 +75,7 @@
   </main>
   <footer class="site-footer">
     <div class="shell footer-grid">
-      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
         <p class="muted">A shared space for art, humor, and digital imagination.</p>
       </div>
       <div>
@@ -84,12 +84,13 @@
             next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
       </div>
       <div>
-        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <h2 class="eyebrow">Keep in touch</h2>
+        <div class="footer-links"><a href="contact.html">Contact us ↗</a><a href="about.html">Meet the team ↗</a></div>
         <div class="social-links" data-social-links></div>
       </div>
     </div>
-    <div class="shell footer-bottom"><span>© 2026 Pixora · Academic prototype</span><span>Original CSS
-        illustrations · Sample creators & demo trends</span></div>
+    <div class="shell footer-bottom"><span>© 2026 Pixora</span><span>Featured artworks and memes belong to their
+        respective creators</span><a class="back-to-top" href="#main">Back to top ↑</a></div>
   </footer>
   <dialog id="art-dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
     <div class="modal-toolbar">
@@ -104,7 +105,7 @@
         <div class="art-visual modal-preview" id="modal-preview" role="img"></div>
       </div>
       <div class="modal-content">
-        <div class="section-heading"><span class="eyebrow">Artwork / Prototype</span></div>
+        <div class="section-heading"><span class="eyebrow">Artwork details</span></div>
         <h2 id="modal-title"></h2>
         <p id="modal-creator" class="creator-name"></p>
         <p id="modal-description" class="muted"></p>
@@ -126,8 +127,7 @@
             <dd id="modal-edition"></dd>
           </div>
         </dl>
-        <p class="field-hint">Sample artwork by a fictional creator. No minted token or ownership is offered.
-        </p>
+        <p class="field-hint">Shown for viewing only. Pixora does not sell artworks or transfer ownership.</p>
         <div class="button-row"><button class="pill solid" id="save-art" type="button"
             aria-pressed="false">Save artwork</button><a class="pill secondary" id="view-collection"
             href="nft-gallery.html">NFT gallery ↗</a></div>

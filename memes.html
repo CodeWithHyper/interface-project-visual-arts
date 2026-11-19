@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore internet humor and react to prototype memes.">
+  <meta name="description" content="Explore internet humor and react to memes.">
   <meta name="theme-color" content="#080b16">
   <title>Memes - Pixora</title>
   <link rel="icon" href="assets/images/brand/favicon.ico">
@@ -22,7 +22,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="shell header-row">
-      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
       <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
         <a href="explore.html">Explore</a>
         <a href="memes.html" aria-current="page">Memes</a>
@@ -31,7 +31,7 @@
         <a href="contact.html">Contact</a>
       </nav>
       <a class="collection-link" href="nft-gallery.html?view=collection"
-        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+        aria-label="My collection">◈ <span class="collection-label">My collection</span> <span
           data-collection-count>0</span></a>
       <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
         aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
@@ -53,12 +53,16 @@
         moments we share.</p>
     </section>
     <section class="shell section gallery-section">
-      <div class="meme-banner"><span class="meme-banner-icon" aria-hidden="true">☺</span>
-        <div>
-          <p class="eyebrow">Trending in this demo</p>
+      <div class="meme-banner">
+        <div class="meme-banner-art" id="trending-meme-art"></div>
+        <div class="meme-banner-body">
+          <p class="eyebrow"><span class="status-dot"></span> #1 trending right now</p>
           <h2 id="trending-meme-title"></h2>
-          <p class="muted">Sample popularity, real relatability. Leave your reaction below.</p>
-        </div><a class="pill secondary" href="#meme-gallery">Find your mood ↓</a>
+          <p class="muted">Everyone has felt this one. Leave your reaction below.</p>
+          <div class="meme-banner-stats" id="trending-meme-stats"></div>
+          <div class="meme-banner-actions"><button class="pill solid" type="button" id="trending-meme-open">View
+              meme ↗</button><a class="text-link" href="#meme-gallery">Find your mood ↓</a></div>
+        </div>
       </div>
       <div class="section-heading">
         <div>
@@ -66,20 +70,19 @@
           <h2>Fresh from the feed.</h2>
         </div>
         <div class="sort-field"><label for="meme-sort">Sort memes</label><select id="meme-sort">
-            <option value="trending">Trending (demo)</option>
+            <option value="trending">Trending</option>
             <option value="reactions">Most reactions</option>
             <option value="title">Title A–Z</option>
           </select></div>
       </div>
-      <p class="section-description muted">Reaction totals start with sample counts. Your choices are saved in
-        this browser.</p>
+      <p class="section-description muted">React to your favorites. Your choices are saved in this browser.</p>
       <div class="art-grid" id="meme-gallery"></div>
       <p class="sr-only" id="reaction-status" role="status"></p>
     </section>
   </main>
   <footer class="site-footer">
     <div class="shell footer-grid">
-      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
         <p class="muted">A shared space for art, humor, and digital imagination.</p>
       </div>
       <div>
@@ -88,12 +91,13 @@
             next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
       </div>
       <div>
-        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <h2 class="eyebrow">Keep in touch</h2>
+        <div class="footer-links"><a href="contact.html">Contact us ↗</a><a href="about.html">Meet the team ↗</a></div>
         <div class="social-links" data-social-links></div>
       </div>
     </div>
-    <div class="shell footer-bottom"><span>© 2026 Pixora · Academic prototype</span><span>Original CSS
-        illustrations · Sample creators & demo trends</span></div>
+    <div class="shell footer-bottom"><span>© 2026 Pixora</span><span>Featured artworks and memes belong to their
+        respective creators</span><a class="back-to-top" href="#main">Back to top ↑</a></div>
   </footer>
   <dialog id="art-dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
     <div class="modal-toolbar">
@@ -108,7 +112,7 @@
         <div class="art-visual modal-preview" id="modal-preview" role="img"></div>
       </div>
       <div class="modal-content">
-        <div class="section-heading"><span class="eyebrow">Artwork / Prototype</span></div>
+        <div class="section-heading"><span class="eyebrow">Artwork details</span></div>
         <h2 id="modal-title"></h2>
         <p id="modal-creator" class="creator-name"></p>
         <p id="modal-description" class="muted"></p>
@@ -130,8 +134,7 @@
             <dd id="modal-edition"></dd>
           </div>
         </dl>
-        <p class="field-hint">Sample artwork by a fictional creator. No minted token or ownership is offered.
-        </p>
+        <p class="field-hint">Shown for viewing only. Pixora does not sell artworks or transfer ownership.</p>
         <div class="button-row"><button class="pill solid" id="save-art" type="button"
             aria-pressed="false">Save artwork</button><a class="pill secondary" id="view-collection"
             href="nft-gallery.html">NFT gallery ↗</a></div>

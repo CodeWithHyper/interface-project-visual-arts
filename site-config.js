@@ -26,7 +26,7 @@ const SITE_CONFIG = {
   "team": [
     {
       "name": "Prinze Kyle Santiago",
-      "role": "Facilitator & Writer",
+      "role": "Project Coordinator & Content Writer",
       "initials": "PS",
       "photo": "assets/images/people_images/Prinze_Kyle_Santiago.png",
       "photoPosition": "50% 48%",
@@ -34,7 +34,7 @@ const SITE_CONFIG = {
     },
     {
       "name": "Randel Thomas Babao",
-      "role": "Researcher",
+      "role": "Research Analyst",
       "initials": "RB",
       "photo": "assets/images/people_images/Randel_Thomas_Babao.png",
       "photoPosition": "52% 31%",
@@ -42,15 +42,15 @@ const SITE_CONFIG = {
     },
     {
       "name": "Arlette Tuastumban",
-      "role": "Designer",
+      "role": "Visual & UI Designer",
       "initials": "AT",
       "photo": "assets/images/people_images/Arlette_Tuastumban.png",
       "photoPosition": "52% 31%",
       "photoZoom": 1.1
     },
     {
-      "name": "David E. Valdepeña",
-      "role": "Designer",
+      "name": "David Erwin Valdepeña",
+      "role": "Lead Web Developer & Designer",
       "initials": "DV",
       "photo": "assets/images/people_images/David_Erwin_Valdepena.png",
       "photoPosition": "52% 29%",
@@ -58,7 +58,7 @@ const SITE_CONFIG = {
     },
     {
       "name": "Ginobbli Alfred Macasadia",
-      "role": "Writer",
+      "role": "Content Writer",
       "initials": "GM",
       "photo": "assets/images/people_images/Ginobbli_Alfred_Macasadia.png",
       "photoPosition": "52% 54%",

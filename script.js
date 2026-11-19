@@ -84,7 +84,7 @@ document.addEventListener("error", event => {
   if (!image.matches?.("[data-art-image]")) return;
   const frame = image.parentElement;
   frame.className = frame.className.replace("has-card-image", image.dataset.fallbackVisual);
-  frame.setAttribute("aria-label", "Placeholder illustration for " + image.dataset.artTitle);
+  frame.setAttribute("aria-label", "Illustration for " + image.dataset.artTitle);
   image.remove();
 }, true);
 
@@ -109,12 +109,12 @@ function artworkCard(art, options = {}) {
       </div>
     </article>`;
   }
-  const badge = options.trending ? `<span class="trend-badge">↗ Demo trend ${art.trend}</span>` : escapeHtml(art.category);
+  const badge = options.trending ? `<span class="trend-badge">↗ Trend ${art.trend}</span>` : escapeHtml(art.category);
   return `<article class="art-card">
     <button type="button" class="card-open" data-art-id="${escapeHtml(art.id)}" aria-label="View details for ${escapeHtml(art.title)}">
       ${artworkVisual(art, "card-visual")}
       <div class="card-body"><div class="card-meta"><span>${badge}</span><span class="mono">${escapeHtml(art.edition)}</span></div>
-        <h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)} · Sample creator</p>
+        <h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)}</p>
         <p class="card-description">${escapeHtml(art.description)}</p><div class="card-bottom"><span>${escapeHtml(art.collection)}</span><span aria-hidden="true">↗</span></div>
       </div>
     </button>
@@ -203,7 +203,7 @@ function renderGallery() {
     return categoryMatch && searchMatch;
   }).sort((a, b) => sort === "title" ? a.title.localeCompare(b.title) : sort === "trending" ? b.trend - a.trend : Number(b.featured) - Number(a.featured));
   byId("art-grid").innerHTML = matches.map(art => artworkCard(art)).join("");
-  byId("gallery-count").textContent = `${matches.length} of ${artworks.length} prototype works · ${activeFilter}${query ? ` · Search: “${byId("art-search").value.trim()}”` : ""}`;
+  byId("gallery-count").textContent = `${matches.length} of ${artworks.length} works · ${activeFilter}${query ? ` · Search: “${byId("art-search").value.trim()}”` : ""}`;
   byId("gallery-empty").hidden = matches.length > 0;
   byId("filters").querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.category === activeFilter)));
 }
@@ -243,13 +243,27 @@ function renderMemes(focusReaction) {
   byId("meme-gallery").innerHTML = sorted.map(art => `<article class="art-card">
     <button class="card-open" type="button" data-art-id="${art.id}" aria-label="View ${escapeHtml(art.title)} details">
       ${artworkImagePath(art) ? artworkVisual(art, "meme-visual") : `<div class="art-visual meme-visual ${art.visual}" role="img" aria-label="${escapeHtml(art.caption || art.title)}. ${escapeHtml(art.punchline || art.description)}"><span class="meme-caption">${escapeHtml(art.caption || art.title.toUpperCase())}</span><span class="meme-caption">${escapeHtml(art.punchline || (art.id === "404-self" ? "PLEASE TRY AGAIN AFTER COFFEE" : "ME AFTER ONE COMPLIMENT"))}</span></div>`}
-      <div class="card-body"><div class="card-meta"><span>↗ Demo trend ${art.trend}</span><span>MEME / ${art.year}</span></div><h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)} · Sample creator</p></div>
+      <div class="card-body"><div class="card-meta"><span>↗ Trend ${art.trend}</span><span>MEME / ${art.year}</span></div><h3>${escapeHtml(art.title)}</h3><p class="creator-name">By ${escapeHtml(art.creator)}</p></div>
     </button><div class="reaction-row" role="group" aria-label="React to ${escapeHtml(art.title)}">${reactionTypes.map(type => `<button type="button" class="pill secondary" data-reaction="${type.id}" data-meme-id="${art.id}" aria-label="${type.label} reaction for ${escapeHtml(art.title)}" aria-pressed="${state.reactions[art.id] === type.id}"><span aria-hidden="true">${type.icon}</span> ${reactionCount(art, type)}</button>`).join("")}</div>
   </article>`).join("");
   if (focusReaction) document.querySelector(`[data-meme-id="${focusReaction.id}"][data-reaction="${focusReaction.type}"]`)?.focus();
+  renderTrendingMeme();
+}
+// Banner for the top-trending meme; reaction counts refresh whenever the gallery re-renders.
+function renderTrendingMeme() {
+  const top = [...memes].sort((a, b) => b.trend - a.trend)[0];
+  if (!top) return;
+  const art = byId("trending-meme-art");
+  if (art.dataset.artId !== top.id) {
+    art.dataset.artId = top.id;
+    art.innerHTML = `<button type="button" class="meme-banner-frame" data-art-id="${escapeHtml(top.id)}" aria-label="View ${escapeHtml(top.title)} details">${artworkVisual(top, "meme-banner-visual")}</button>`;
+    byId("trending-meme-title").textContent = top.title;
+    byId("trending-meme-open").dataset.artId = top.id;
+  }
+  byId("trending-meme-stats").innerHTML = `<span class="meme-stat meme-stat--trend">↗ Trend ${top.trend}</span>` +
+    reactionTypes.map(type => `<span class="meme-stat" title="${type.label}"><span aria-hidden="true">${type.icon}</span> ${reactionCount(top, type)}<span class="sr-only"> ${type.label}</span></span>`).join("");
 }
 if (page === "memes") {
-  byId("trending-meme-title").textContent = [...memes].sort((a, b) => b.trend - a.trend)[0].title;
   byId("meme-sort").addEventListener("change", () => renderMemes());
   byId("meme-gallery").addEventListener("click", event => {
     const button = event.target.closest("[data-reaction]");
@@ -272,7 +286,7 @@ function renderNfts() {
   byId("nft-grid").innerHTML = matches.map(art => artworkCard(art, {collectible: true})).join("");
   byId("all-editions").setAttribute("aria-pressed", String(!collectionOnly));
   byId("my-collection").setAttribute("aria-pressed", String(collectionOnly));
-  byId("nft-count").textContent = `${matches.length} ${matches.length === 1 ? "edition" : "editions"} · ${collectionOnly ? "My simulated collection" : "All prototype editions"}`;
+  byId("nft-count").textContent = `${matches.length} ${matches.length === 1 ? "edition" : "editions"} · ${collectionOnly ? "My collection" : "All editions"}`;
   byId("collection-empty").hidden = matches.length > 0;
   updateCollectionCounts();
 }
@@ -325,7 +339,7 @@ function renderModalArt(art) {
   byId("modal-preview").className = "art-visual modal-preview " + (artworkImagePath(art) ? "has-card-image" : art.visual);
   byId("modal-preview").innerHTML = artworkImageMarkup(art, false);
   byId("modal-preview").setAttribute("aria-label", art.imageAlt || "Artwork preview for " + art.title);
-  const details = {title: art.title, creator: "By " + art.creator + " · Fictional creator", description: art.description, category: art.category, collection: art.collection, year: art.year, edition: art.edition};
+  const details = {title: art.title, creator: "By " + art.creator, description: art.description, category: art.category, collection: art.collection, year: art.year, edition: art.edition};
   for (const [key, value] of Object.entries(details)) byId("modal-" + key).textContent = value;
   byId("modal-feedback").textContent = "";
   byId("view-collection").href = collectibleIds.has(art.id) ? "nft-gallery.html" : "memes.html";
@@ -412,7 +426,7 @@ if (page === "about") {
   };
   byId("team-grid").innerHTML = SITE_CONFIG.team.map((member, index) => `<article class="profile-card">${teamAvatar(member)}<p class="eyebrow">Project team / ${String(index + 1).padStart(2, "0")}</p><h3>${escapeHtml(member.name)}</h3>${member.role ? `<p class="creator-name">${escapeHtml(member.role)}</p>` : ""}</article>`).join("");
   if (SITE_CONFIG.team.every(member => member.name !== "Member name to be added")) byId("team-note").textContent = "Meet the group bringing Pixora to life.";
-  byId("artist-profiles").innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Fictional demo creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
+  byId("artist-profiles").innerHTML = artists.map(artist => `<article class="profile-card ${escapeHtml(artist.theme)}"><div class="profile-avatar" aria-hidden="true">${escapeHtml(artist.symbol)}</div><p class="eyebrow">Featured creator</p><h3>${escapeHtml(artist.name)}</h3><p class="creator-name">${escapeHtml(artist.role)}</p><p class="muted">${escapeHtml(artist.description)}</p></article>`).join("");
 }
 
 // Contact: save a local draft, or hand off to an email app when an address is configured.
@@ -456,7 +470,7 @@ if (page === "contact") {
       byId("contact-status").textContent = "Email draft prepared. Review and send it in your email app; this website has not sent a message.";
     } else {
       byId("contact-status").textContent = stored
-        ? "Draft saved in this tab. Nothing has been sent. A team contact address is still being added."
+        ? "Draft saved in this tab. Nothing has been sent yet."
         : "Your message is still in this form, but this browser could not save a draft. Nothing has been sent.";
     }
   });

@@ -22,7 +22,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="shell header-row">
-      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
       <nav class="desktop-nav" aria-label="Main navigation"><a href="index.html">Home</a>
         <a href="explore.html">Explore</a>
         <a href="memes.html">Memes</a>
@@ -31,7 +31,7 @@
         <a href="contact.html">Contact</a>
       </nav>
       <a class="collection-link" href="nft-gallery.html?view=collection"
-        aria-label="My simulated collection">◈ <span class="collection-label">My collection</span> <span
+        aria-label="My collection">◈ <span class="collection-label">My collection</span> <span
           data-collection-count>0</span></a>
       <button class="pill secondary mobile-toggle" id="menu-toggle" type="button"
         aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
@@ -46,15 +46,16 @@
     </nav>
   </header>
   <main id="main">
-    <section class="shell page-intro">
+    <section class="shell page-intro about-intro">
       <p class="eyebrow">About us / The idea behind the pixels</p>
       <h1>A shared space.<br>A thousand perspectives.</h1>
       <p class="intro-copy muted">Pixora brings digital art, internet humor, and collectible experiments
         into one creative playground.</p>
     </section>
     <section class="shell section gallery-section about-story">
-      <div class="story-art art-visual visual-window" role="img"
-        aria-label="An abstract open window symbolizing creative possibilities"></div>
+      <div class="story-art art-visual has-card-image"><img class="card-image"
+          src="assets/images/about/our-story.jpg" width="1200" height="1200" loading="lazy" decoding="async"
+          alt="Glossy 3D social media icons — search bars, chat bubbles, profile cards and map pins — surrounding a pair of wide cartoon eyes"></div>
       <div>
         <p class="eyebrow">Our story</p>
         <h2>The internet is a canvas we make together.</h2>
@@ -68,17 +69,33 @@
     </section>
     <section class="section section-tinted">
       <div class="shell mission-grid">
-        <article>
-          <p class="eyebrow">01 / Our mission</p>
+        <article class="mission-card mission-card--mission">
+          <div class="mission-card-head">
+            <p class="eyebrow">Our mission</p>
+            <span class="mission-number" aria-hidden="true">01</span>
+          </div>
           <h2>Make creativity<br>feel accessible.</h2>
           <p class="muted">Invite people to discover digital expression, understand its visual language, and
             participate through simple, playful experiences.</p>
+          <ul class="mission-tags" aria-label="Mission focus">
+            <li>Discover</li>
+            <li>Understand</li>
+            <li>Participate</li>
+          </ul>
         </article>
-        <article>
-          <p class="eyebrow">02 / Our vision</p>
+        <article class="mission-card mission-card--vision">
+          <div class="mission-card-head">
+            <p class="eyebrow">Our vision</p>
+            <span class="mission-number" aria-hidden="true">02</span>
+          </div>
           <h2>More perspectives.<br>More possibilities.</h2>
           <p class="muted">Imagine an inclusive digital space where original ideas, shared humor, and
             thoughtful creative work can exist side by side.</p>
+          <ul class="mission-tags" aria-label="Vision focus">
+            <li>Inclusive</li>
+            <li>Original</li>
+            <li>Side by side</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -89,25 +106,13 @@
           <h2>People behind the pixels.</h2>
         </div>
       </div>
-      <p class="section-description muted" id="team-note">Group member details are being added. The roles
-        below show the project’s areas of work.</p>
-      <div class="art-grid" id="team-grid"></div>
-    </section>
-    <section class="shell section compact-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Sample creators / Fictional profiles</p>
-          <h2>Voices in the demo.</h2>
-        </div>
-      </div>
-      <p class="section-description muted">These creative personas accompany the prototype artworks and are
-        separate from the project team.</p>
-      <div class="art-grid" id="artist-profiles"></div>
+      <p class="section-description muted" id="team-note">Meet the group bringing Pixora to life.</p>
+      <div class="art-grid team-grid" id="team-grid"></div>
     </section>
   </main>
   <footer class="site-footer">
     <div class="shell footer-grid">
-      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="1254" height="1254" decoding="async"></a>
+      <div><a class="brand" href="index.html" aria-label="Pixora home" data-brand><img class="brand-logo" src="assets/images/brand/logo.png" alt="" width="2004" height="580" decoding="async"></a>
         <p class="muted">A shared space for art, humor, and digital imagination.</p>
       </div>
       <div>
@@ -116,12 +121,13 @@
             next laugh ↗</a><a href="nft-gallery.html">Discover collectibles ↗</a></div>
       </div>
       <div>
-        <h2 class="eyebrow">Keep in touch</h2><a href="contact.html">Connect with the team ↗</a>
+        <h2 class="eyebrow">Keep in touch</h2>
+        <div class="footer-links"><a href="contact.html">Contact us ↗</a><a href="about.html">Meet the team ↗</a></div>
         <div class="social-links" data-social-links></div>
       </div>
     </div>
-    <div class="shell footer-bottom"><span>© 2026 Pixora · Academic prototype</span><span>Original CSS
-        illustrations · Sample creators & demo trends</span></div>
+    <div class="shell footer-bottom"><span>© 2026 Pixora</span><span>Featured artworks and memes belong to their
+        respective creators</span><a class="back-to-top" href="#main">Back to top ↑</a></div>
   </footer>
 
   <p class="storage-notice shell" id="storage-notice" role="status" hidden></p>
