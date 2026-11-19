@@ -1445,7 +1445,29 @@ textarea {
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 14px;
+}
+
+.social-stack a {
+  border: 1px solid transparent;
+  font-size: .9rem;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+
+.social-stack a small {
+  color: var(--muted);
+  font: .72rem "Space Mono", monospace;
+  transition: color .2s ease;
+}
+
+.social-stack a:hover {
+  background: #2c59865c;
+  border-color: #38eef24d;
+}
+
+.social-stack a:hover small {
+  color: var(--cyan);
 }
 
 .social-placeholder {

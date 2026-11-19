@@ -169,10 +169,13 @@ function safeSocialUrl(url) {
   } catch { return null; }
 }
 document.querySelectorAll("[data-social-links]").forEach(host => {
+  // The contact page's larger cards also show the handle; the footer keeps just the name.
+  const showHandle = host.classList.contains("social-stack");
   host.innerHTML = SITE_CONFIG.socials.map(social => {
     const url = safeSocialUrl(social.url);
+    const handle = showHandle && social.handle ? `<small>${escapeHtml(social.handle)} ↗</small>` : " ↗";
     return url
-      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(social.name)} ↗</a>`
+      ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(social.name)}${handle}</a>`
       : `<span class="social-placeholder">${escapeHtml(social.name)} <small>Profile coming soon</small></span>`;
   }).join("");
 });

@@ -5,19 +5,23 @@
 // Leave contactEmail empty to use the local contact-draft mode.
 const SITE_CONFIG = {
   "logoSrc": "assets/images/brand/logo.png",
-  "contactEmail": "",
+  // PLACEHOLDER contact details: replace with the team's real email and profiles before publishing.
+  "contactEmail": "hello.pixora.rva@gmail.com",
   "socials": [
     {
       "name": "Instagram",
-      "url": ""
+      "handle": "@pixora.rva",
+      "url": "https://www.instagram.com/pixora.rva/"
     },
     {
       "name": "Facebook",
-      "url": ""
+      "handle": "Pixora Visual Arts",
+      "url": "https://www.facebook.com/pixora.rva"
     },
     {
       "name": "TikTok",
-      "url": ""
+      "handle": "@pixora.rva",
+      "url": "https://www.tiktok.com/@pixora.rva"
     }
   ],
   // photo is optional; without it the card shows initials.
