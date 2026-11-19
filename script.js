@@ -88,6 +88,13 @@ document.addEventListener("error", event => {
   image.remove();
 }, true);
 
+// Collect toggle on NFT cards; feeds the "My collection" view and the header count.
+function collectButton(art) {
+  const collected = state.collection.includes(art.id);
+  const label = collected ? `Remove ${art.title} from your collection` : `Add ${art.title} to your collection`;
+  return `<button class="nft-card-collect" type="button" data-collect-id="${escapeHtml(art.id)}" aria-pressed="${collected}" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}"><span aria-hidden="true">${collected ? "◈" : "+"}</span> ${collected ? "Collected" : "Collect"}</button>`;
+}
+
 function artworkCard(art, options = {}) {
   if (options.collectible) {
     const reacted = state.reactions[art.id] === "love";
@@ -105,7 +112,10 @@ function artworkCard(art, options = {}) {
       </button>
       <div class="nft-card-footer">
         <span class="nft-card-price"><span class="sr-only">Price: </span>${escapeHtml(price)}</span>
-        <button class="nft-card-reaction" type="button" data-nft-reaction-id="${escapeHtml(art.id)}" aria-pressed="${reacted}" aria-label="${escapeHtml(reactionLabel)}, ${hearts} ${hearts === 1 ? "heart" : "hearts"}" title="${escapeHtml(reactionLabel)}"><span aria-hidden="true">${reacted ? "♥" : "♡"}</span><span data-nft-heart-count>${hearts}</span></button>
+        <div class="nft-card-actions">
+          <button class="nft-card-reaction" type="button" data-nft-reaction-id="${escapeHtml(art.id)}" aria-pressed="${reacted}" aria-label="${escapeHtml(reactionLabel)}, ${hearts} ${hearts === 1 ? "heart" : "hearts"}" title="${escapeHtml(reactionLabel)}"><span aria-hidden="true">${reacted ? "♥" : "♡"}</span><span data-nft-heart-count>${hearts}</span></button>
+          ${collectButton(art)}
+        </div>
       </div>
     </article>`;
   }
@@ -152,6 +162,10 @@ toggle.addEventListener("click", () => {
   toggle.setAttribute("aria-label", opening ? "Close navigation menu" : "Open navigation menu");
 });
 menu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+// The menu floats over the page, so a tap anywhere outside it closes it.
+document.addEventListener("click", event => {
+  if (!menu.hidden && !menu.contains(event.target) && !toggle.contains(event.target)) closeMenu();
+});
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && !menu.hidden) {
     closeMenu();
@@ -201,7 +215,7 @@ function renderGallery() {
   const matches = artworks.filter(art => {
     const categoryMatch = activeFilter === "All Works" ||
       (activeFilter === "Featured" && art.featured) ||
-      (activeFilter === "Saved" && state.saved.includes(art.id)) || art.category === activeFilter;
+      (activeFilter === "Saved" && (state.saved.includes(art.id) || state.collection.includes(art.id))) || art.category === activeFilter;
     const searchMatch = [art.title, art.creator, art.collection, art.category, art.description].join(" ").toLowerCase().includes(query);
     return categoryMatch && searchMatch;
   }).sort((a, b) => sort === "title" ? a.title.localeCompare(b.title) : sort === "trending" ? b.trend - a.trend : Number(b.featured) - Number(a.featured));
@@ -306,6 +320,25 @@ if (page === "nft") {
     byId("all-editions").focus();
   });
   byId("nft-grid").addEventListener("click", event => {
+    const collect = event.target.closest("[data-collect-id]");
+    if (collect) {
+      const id = collect.dataset.collectId;
+      const art = artworks.find(item => item.id === id);
+      toggleId(state.collection, id);
+      persistState();
+      const collected = state.collection.includes(id);
+      if (collectionOnly && !collected) {
+        // Removing from the "My collection" view takes the card away; keep focus nearby.
+        renderNfts();
+        (byId("nft-grid").querySelector("[data-collect-id]") || byId("browse-editions")).focus();
+      } else {
+        collect.outerHTML = collectButton(art);
+        byId("nft-grid").querySelector(`[data-collect-id="${CSS.escape(id)}"]`)?.focus();
+        updateCollectionCounts();
+      }
+      byId("collection-status").textContent = collected ? `${art.title} added to your collection.` : `${art.title} removed from your collection.`;
+      return;
+    }
     const button = event.target.closest("[data-nft-reaction-id]");
     if (!button) return;
     const id = button.dataset.nftReactionId;
@@ -332,10 +365,14 @@ const dialog = byId("art-dialog");
 let activeArt = null;
 let lastTrigger = null;
 let modalArtworks = [];
+// NFTs are added to the collection (same list as the card's Collect button); memes are saved.
 function updateSave() {
-  const saved = state.saved.includes(activeArt.id);
-  byId("save-art").setAttribute("aria-pressed", String(saved));
-  byId("save-art").textContent = saved ? "Saved ✓ · Unsave" : "Save artwork";
+  const collectible = collectibleIds.has(activeArt.id);
+  const on = collectible ? state.collection.includes(activeArt.id) : state.saved.includes(activeArt.id);
+  byId("save-art").setAttribute("aria-pressed", String(on));
+  byId("save-art").textContent = collectible
+    ? (on ? "Collected ✓ · Remove" : "Add to collection ◈")
+    : (on ? "Saved ✓ · Unsave" : "Save artwork");
 }
 function renderModalArt(art) {
   activeArt = art;
@@ -402,10 +439,28 @@ if (dialog) {
   dialog.addEventListener("close", () => { if (lastTrigger?.isConnected) lastTrigger.focus(); });
   byId("save-art").addEventListener("click", () => {
     if (!activeArt) return;
-    toggleId(state.saved, activeArt.id);
+    const id = activeArt.id;
+    if (collectibleIds.has(id)) {
+      toggleId(state.collection, id);
+      persistState();
+      updateSave();
+      updateCollectionCounts();
+      // Keep the card's Collect button behind the dialog in sync.
+      const cardButton = document.querySelector(`#nft-grid [data-collect-id="${CSS.escape(id)}"]`);
+      if (cardButton) cardButton.outerHTML = collectButton(activeArt);
+      byId("modal-feedback").textContent = state.collection.includes(id)
+        ? "Added to your collection. Find it in NFT Gallery → My collection."
+        : "Removed from your collection.";
+      return;
+    }
+    toggleId(state.saved, id);
     persistState();
     updateSave();
-    byId("modal-feedback").textContent = state.saved.includes(activeArt.id) ? "Saved. Find this work in Explore → Saved." : "Removed from your saved works.";
+    byId("modal-feedback").textContent = state.saved.includes(id) ? "Saved. Find this work in Explore → Saved." : "Removed from your saved works.";
+  });
+  // In the "My collection" view, drop cards removed from inside the dialog once it closes.
+  if (page === "nft") dialog.addEventListener("close", () => {
+    if (collectionOnly && byId("nft-grid").querySelectorAll(".nft-card").length !== state.collection.length) renderNfts();
   });
   // Refresh saved-filter results after the dialog closes without leaving stale cards.
   if (page === "explore") dialog.addEventListener("close", () => {
